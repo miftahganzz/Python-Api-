@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Rest Api</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-8">
+        <h2 class="text-3xl font-bold mb-8">Simple Rest Api</h2>
+        <input type="text" id="search" class="mb-4 px-4 py-2 rounded-lg focus:outline-none focus:ring focus:border-blue-300 bg-gray-800 text-white" placeholder="Search..." onkeyup="searchFeatures()">
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full border-collapse border border-gray-800">
+                <thead>
+                    <tr class="bg-blue-600">
+                        <th class="border px-4 py-2">No</th>
+                        <th class="border px-4 py-2">Name</th>
+                        <th class="border px-4 py-2">Method</th>
+                        <th class="border px-4 py-2">Endpoint</th>
+                        <th class="border px-4 py-2">Details</th>
+                    </tr>
+                </thead>
+                <tbody id="featureTable" class="text-center">
+                    {% if routes %}
+                        {% for route in routes %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ loop.index }}</td>
+                            <td class="border px-4 py-2">{{ route.name }}</td>
+                            <td class="border px-4 py-2">
+                                {% if route.method == 'GET' %}
+                                    <span class="bg-green-500 px-2 py-1 rounded-lg">{{ route.method }}</span>
+                                {% elif route.method == 'POST' %}
+                                    <span class="bg-blue-800 px-2 py-1 rounded-lg">{{ route.method }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="border px-4 py-2">{{ route.param }}</td>
+                            <td class="border px-4 py-2 text-center"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mx-auto" onclick="execute('{{ route.url }}')">Execute</button></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="border px-4 py-2 text-center">No features found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function execute(url) {
+            window.location.href = url;
+        }
+
+        function searchFeatures() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("featureTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
