@@ -7,8 +7,8 @@ This project is a simple REST API use Python for learn
 2. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/miftahganzz/Python-Api.git
-   cd Python-Api
+   git clone https://github.com/miftahganzz/Python-Api-.git
+   cd Python-Api-
    ```
 
 3. Install the required dependencies:
